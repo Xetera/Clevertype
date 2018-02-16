@@ -7,13 +7,14 @@ class Cleverbot{
         apiKey:  ""
     };
     private CleverbotState : cb.CleverbotState;
-
+    private numberOfAPICalls : number;
     constructor(apiKey : string ){
         if (apiKey.length !== 27)
             //
             throw new SyntaxError(`${apiKey} is not a valid Cleverbot API key`);
         this.config.apiKey = apiKey;
         this.endpoint= 'https://www.cleverbot.com/getreply?key=' + this.config.apiKey;
+        this.numberOfAPICalls = 0;
         // the first cs request actually does return us a reply
     }
 
@@ -41,25 +42,21 @@ class Cleverbot{
     }
 
     private static encodeInput(input : string) : string {
-        return '&input=' + input;
+        return '&input=' + encodeURI(input);
     }
 
-    private async retrieveCleverbotState() : Promise<cb.CleverbotState>  {
-        const _this = this;
-        let response : cb.APIResponse;
-        console.log(this.endpoint);
-        return new Promise<cb.CleverbotState>(function (resolve, reject) {
-            http.get(_this.endpoint, (res : any) => {
-                let final : any;
+    private getHTTPRequest(url : string) : Promise<Object>{
+        let response : any;
+        return new Promise<Object>(function (resolve, reject) {
+            http.get(url, (res : any) => {
+                let final : any = "";
                 res.on('data', (d:string) => {
                     final += d;
                     console.log(final);
                 });
 
                 res.on('end', () => {
-                    response = JSON.parse(final);
-                    console.log('cs=' + final);
-                    resolve(response.cs);
+                    resolve(JSON.parse(final));
                 });
 
                 res.on('error', (error : Error) => {
@@ -67,16 +64,20 @@ class Cleverbot{
                 });
             });
         })
-    }
 
-    private setCleverbotState() : Promise<cb.CleverbotState>{
-        const that = this;
-        return new Promise<cb.CleverbotState>(function (resolve, reject) {
-            that.retrieveCleverbotState().then(async(cs : cb.CleverbotState)=> {
-                that.CleverbotState = cs;
-                resolve(cs);
-            });
-        })
+    }
+    /*
+    private async retrieveCleverbotState() : Promise<cb.CleverbotState>  {
+        const _this = this;
+        let response : cb.APIResponse;
+        console.log(this.endpoint);
+        this.getHTTPRequest(this.endpoint).then(state => {
+
+        });
+    }
+    */
+    private setCleverbotState(input : string) : void {
+        this.CleverbotState = input;
     }
 
     public say(message : string, verbose ?: boolean) : Promise<cb.APIResponse|string> {
@@ -92,13 +93,13 @@ class Cleverbot{
         }
         */
         endpoint += this.encodedCleverbotState;
-
-        if (this.config.emotion) endpoint += '&' + this.config.emotion;
-        if (this.config.engagement) endpoint += '&' + this.config.engagement;
-        if (this.config.regard) endpoint += '&' + this.config.regard;
+        if (this.config.emotion) endpoint += this.encodedEmotion;
+        if (this.config.engagement) endpoint += this.encodedEngagement;
+        if (this.config.regard) endpoint += this.encodedRegard;
 
         let response : cb.APIResponse;
         console.log(endpoint);
+
         return new Promise<cb.APIResponse|string>(function (resolve, reject) {
             http.get(endpoint, (res : any )=> {
                 let final : any = "";
@@ -108,14 +109,18 @@ class Cleverbot{
 
                 res.on('end', () => {
                     response = JSON.parse(final);
+                    that.numberOfAPICalls++;
 
-                    if (!verbose)
-                        resolve(response.output);
-                    else
-                        resolve(response);
                     if (that.CleverbotState === null){
-                        that.CleverbotState = response.cs;
+                        that.setCleverbotState(response.cs);
                     }
+                    if (verbose instanceof Boolean)
+                        resolve(response);
+
+                    else
+                        resolve(response.output);
+    
+
                 });
 
                 res.on('error', (error : Error) => {
@@ -126,6 +131,7 @@ class Cleverbot{
     }
 
     public setEmotion(amount : number){
+        if (amount < 0 || amount > 100) throw new RangeError(`Emotion must be a value between 0 and 100.`);
         this.config.emotion = amount;
     }
 
@@ -135,7 +141,12 @@ class Cleverbot{
     }
 
     public setRegard(amount : number){
+        if (amount < 0 || amount > 100) throw new RangeError(`Regard must be a value between 0 and 100.`);
         this.config.emotion = amount;
+    }
+
+    public get amountOfCalls(){
+        return this.numberOfAPICalls;
     }
 }
 
