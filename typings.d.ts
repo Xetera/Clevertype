@@ -3,6 +3,7 @@
 declare module "Cleverbot" {
     export type CleverbotState = string;
 
+
     export enum ResponseTypes {
         INVALID_API_KEY = 401,
         API_NOT_FOUND = 404,
@@ -16,9 +17,9 @@ declare module "Cleverbot" {
         emotion ?: number;
         engagement ?: number;
         regard ?: number;
-    }   
+    }
 
-    export interface Response {
+    export interface APIResponse {
         cs : CleverbotState;
         interaction_count: number;
         input: string;
