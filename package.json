@@ -1,0 +1,17 @@
+{
+  "name": "cleverbot-node-wrapper",
+  "version": "1.0.0",
+  "description": "Node.js API wrapper for Cleverbot",
+  "main": "Cleverbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Cleverbot",
+    "Node.JS",
+    "API",
+    "wrapper"
+  ],
+  "author": "Xetera",
+  "license": "ISC"
+}
