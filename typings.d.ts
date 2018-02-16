@@ -1,5 +1,3 @@
-
-
 declare module "Cleverbot" {
     export type CleverbotState = string;
 
