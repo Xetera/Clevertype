@@ -1,7 +1,6 @@
 import * as http from 'https'
 import * as cb from "Cleverbot";
 
-
 class Cleverbot{
     private endpoint : string;
     private config : cb.Config = {
@@ -9,13 +8,12 @@ class Cleverbot{
     };
     private CleverbotState : cb.CleverbotState;
 
-    constructor(apiKey : string){
+    constructor(apiKey : string ){
         if (apiKey.length !== 27)
             //
             throw new SyntaxError(`${apiKey} is not a valid Cleverbot API key`);
         this.config.apiKey = apiKey;
         this.endpoint= 'https://www.cleverbot.com/getreply?key=' + this.config.apiKey;
-
         // the first cs request actually does return us a reply
     }
 
@@ -46,20 +44,21 @@ class Cleverbot{
         return '&input=' + input;
     }
 
-    private retrieveCleverbotState() : Promise<cb.CleverbotState>  {
+    private async retrieveCleverbotState() : Promise<cb.CleverbotState>  {
         const _this = this;
-        let response : cb.Response;
-
-        return new Promise(function (resolve, reject) {
+        let response : cb.APIResponse;
+        console.log(this.endpoint);
+        return new Promise<cb.CleverbotState>(function (resolve, reject) {
             http.get(_this.endpoint, (res : any) => {
                 let final : any;
                 res.on('data', (d:string) => {
                     final += d;
+                    console.log(final);
                 });
 
                 res.on('end', () => {
                     response = JSON.parse(final);
-                    console.log('cs=' + response.cs);
+                    console.log('cs=' + final);
                     resolve(response.cs);
                 });
 
@@ -70,27 +69,39 @@ class Cleverbot{
         })
     }
 
-    private setCleverbotState(){
-        this.retrieveCleverbotState().then(cs => {
-            this.CleverbotState = cs;
+    private setCleverbotState() : Promise<cb.CleverbotState>{
+        const that = this;
+        return new Promise<cb.CleverbotState>(function (resolve, reject) {
+            that.retrieveCleverbotState().then(async(cs : cb.CleverbotState)=> {
+                that.CleverbotState = cs;
+                resolve(cs);
+            });
         })
     }
 
-    public say(message : string, verbose: boolean = false) : any | Promise<cb.Response> | Promise<string> {
+    public say(message : string, verbose ?: boolean) : Promise<cb.APIResponse|string> {
+        let that = this;
         let endpoint : string = this.endpoint;
         endpoint += Cleverbot.encodeInput(message);
-        if (this.CleverbotState == null)
-            this.setCleverbotState();
+        /*
+        if (this.CleverbotState == null) {
+            console.log("cleverbot state is fked");
+            this.setCleverbotState().then(state => {
+                this.CleverbotState = state;
+            });
+        }
+        */
         endpoint += this.encodedCleverbotState;
+
         if (this.config.emotion) endpoint += '&' + this.config.emotion;
         if (this.config.engagement) endpoint += '&' + this.config.engagement;
         if (this.config.regard) endpoint += '&' + this.config.regard;
 
-        let response : cb.Response;
+        let response : cb.APIResponse;
         console.log(endpoint);
-        return new Promise(function (resolve, reject) {
+        return new Promise<cb.APIResponse|string>(function (resolve, reject) {
             http.get(endpoint, (res : any )=> {
-                let final : any;
+                let final : any = "";
                 res.on('data', (d:string) => {
                     final += d;
                 });
@@ -102,7 +113,9 @@ class Cleverbot{
                         resolve(response.output);
                     else
                         resolve(response);
-
+                    if (that.CleverbotState === null){
+                        that.CleverbotState = response.cs;
+                    }
                 });
 
                 res.on('error', (error : Error) => {
