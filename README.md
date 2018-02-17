@@ -1,9 +1,9 @@
-# Cleverbot-Node-Wrapper
+# Clevertype
 
 # Example
 
 ```typescript
-import Cleverbot from "cleverbot-node-wrapper"
+import Cleverbot from "clevertype"
 
 const cleverbot = new Cleverbot('your-api-key-here');
 
