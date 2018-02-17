@@ -14,7 +14,12 @@ const Exceptions : { [index:string] : string } = {
 class Cleverbot{
     private endpoint : string;
     private config : cb.Config = {
-        apiKey:  ""
+        apiKey:"",
+        mood: {
+            emotion: 50,
+            engagement: 50,
+            regard: 50
+        }
     };
     private CleverbotState : cb.CleverbotState;
     private numberOfAPICalls : number;
@@ -22,43 +27,48 @@ class Cleverbot{
 
     private history : string[]; // implementing this later
 
-    constructor(apiKey : string | cb.Config){
-        if (apiKey instanceof String){
-            if (apiKey.length !== 27)
-                throw new SyntaxError(`${apiKey} is not a valid Cleverbot API key`);
+    constructor(input : string | cb.Config){
+        if (typeof input === 'string'){
+            if (input.length !== 27)
+                throw new SyntaxError(`${input} is not a valid Cleverbot API key`);
 
-            this.config.apiKey = apiKey;
+            this.config.apiKey = input;
         }
-        else if (typeof apiKey ){
+        else if (typeof input === 'object'){
+            if (input.apiKey.length !== 27)
+                throw new SyntaxError(`${input} is not a valid Cleverbot API key`);
+            this.config.apiKey = input.apiKey;
 
+            if (input.mood.emotion != undefined) this.setEmotion(input.mood.emotion);
+            if (input.mood.engagement != undefined)  this.setEngagement(input.mood.engagement);
+            if (input.mood.regard != undefined ) this.setRegard(input.mood.regard);
         }
-
         this.endpoint= 'https://www.cleverbot.com/getreply?key=' + this.config.apiKey;
         this.wrapperName = 'Clevertype';
         this.numberOfAPICalls = 0;
         // the first cs request actually does return us a reply
     }
 
-    private get encodedWrapper() : string {
+    private get encodedWrapperName() : string {
         return '&wrapper=' + this.wrapperName;
     }
     private get encodedEmotion() : string {
-        if (this.config.emotion === undefined){
+        if (this.config.mood.emotion === undefined){
             return "";
         }
-        return '&cb_settings_tweak1=' + this.config.emotion;
+        return '&cb_settings_tweak1=' + this.config.mood.emotion;
     }
     private get encodedEngagement() : string {
-        if (this.config.engagement === undefined){
+        if (this.config.mood.engagement === undefined){
             return "";
         }
-        return '&cb_settings_tweak2=' + this.config.engagement;
+        return '&cb_settings_tweak2=' + this.config.mood.engagement;
     }
     private get encodedRegard() : string {
-        if (this.config.regard === undefined){
+        if (this.config.mood.regard === undefined){
             return "";
         }
-        return '&cb_settings_tweak3=' + this.config.regard;
+        return '&cb_settings_tweak3=' + this.config.mood.regard;
     }
 
     private get encodedCleverbotState() : string {
@@ -74,11 +84,11 @@ class Cleverbot{
         this.CleverbotState = input;
     }
 
-    public say(message : string, verbose ?: boolean) : Promise<string> {
+    public say(message : string) : Promise<string> {
         let that = this;
         let endpoint : string = this.endpoint;
 
-        endpoint += this.encodedWrapper;
+        endpoint += this.encodedWrapperName;
         endpoint += Cleverbot.encodeInput(message);
         endpoint += this.encodedCleverbotState;
         endpoint += this.encodedEmotion;
@@ -122,24 +132,27 @@ class Cleverbot{
         });
     }
 
-    public setEmotion(amount : number){
+    public setEmotion(amount : number) : void {
         if (amount < 0 || amount > 100) throw new RangeError(`Emotion must be a value between 0 and 100.`);
-        this.config.emotion = amount;
-        console.log(this.config.emotion);
+        this.config.mood.emotion = amount;
+        console.log(this.config.mood.emotion);
     }
 
     public setEngagement(amount : number) : void {
         if (amount < 0 || amount > 100) throw new RangeError(`Engagement must be a value between 0 and 100.`);
-        this.config.engagement = amount;
+        this.config.mood.engagement = amount;
     }
 
-    public setRegard(amount : number){
+    public setRegard(amount : number) : void {
         if (amount < 0 || amount > 100) throw new RangeError(`Regard must be a value between 0 and 100.`);
-        this.config.regard = amount;
+        this.config.mood.regard = amount;
     }
 
-    public get callAmount(){
+    public get callAmount() : number{
         return this.numberOfAPICalls;
+    }
+    public get mood() : cb.Mood {
+        return this.config.mood;
     }
 }
 
