@@ -22,12 +22,17 @@ class Cleverbot{
 
     private history : string[]; // implementing this later
 
-    constructor(apiKey : string ){
-        if (apiKey.length !== 27)
-            //
-            throw new SyntaxError(`${apiKey} is not a valid Cleverbot API key`);
+    constructor(apiKey : string | cb.Config){
+        if (apiKey instanceof String){
+            if (apiKey.length !== 27)
+                throw new SyntaxError(`${apiKey} is not a valid Cleverbot API key`);
 
-        this.config.apiKey = apiKey;
+            this.config.apiKey = apiKey;
+        }
+        else if (typeof apiKey ){
+
+        }
+
         this.endpoint= 'https://www.cleverbot.com/getreply?key=' + this.config.apiKey;
         this.wrapperName = 'Clevertype';
         this.numberOfAPICalls = 0;
@@ -69,7 +74,7 @@ class Cleverbot{
         this.CleverbotState = input;
     }
 
-    public say(message : string, verbose ?: boolean) : Promise<cb.APIResponse|string> {
+    public say(message : string, verbose ?: boolean) : Promise<string> {
         let that = this;
         let endpoint : string = this.endpoint;
 
@@ -83,7 +88,7 @@ class Cleverbot{
         let response : cb.APIResponse;
         console.log(endpoint);
 
-        return new Promise<cb.APIResponse|string>(function (resolve, reject) {
+        return new Promise<string>(function (resolve, reject) {
             http.get(endpoint, (res : any ) => {
                 const statusCodes : Array<string> = Object.keys(Exceptions);
 
@@ -99,16 +104,13 @@ class Cleverbot{
                 });
 
                 res.on('end', () => {
+                    // get history here later
                     response = JSON.parse(final);
                     that.numberOfAPICalls++;
 
                     that.setCleverbotState(response.cs);
 
-                    if (verbose instanceof Boolean)
-                        resolve(response);
-
-                    else
-                        resolve(response.output);
+                    resolve(response.output);
                 });
 
                 res.on('error', (error : Error) => {

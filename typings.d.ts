@@ -1,5 +1,7 @@
 declare module "Cleverbot" {
+
     export type CleverbotState = string;
+    export type Response = string;
 
     export interface Config {
         apiKey : string;
@@ -7,6 +9,13 @@ declare module "Cleverbot" {
         emotion ?: number;
         engagement ?: number;
         regard ?: number;
+    }
+
+    export interface ChatHistory {
+        conversation: {
+            self: string;
+            cleverbot: string;
+        }
     }
 
     export interface APIResponse {
