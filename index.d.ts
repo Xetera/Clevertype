@@ -55,7 +55,7 @@ declare module "Cleverbot" {
         public readonly callAmount : number;
         public readonly mood : Mood;
 
-        public constructor(apiKey: string);
+        public constructor(apiKey: string | Config);
         private static encodeInput(input : string ) : string;
         private retrieveCsEndpoint() : CleverbotState;
         private setCleverbotState(input : string) : void;

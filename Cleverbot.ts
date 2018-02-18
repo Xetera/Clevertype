@@ -43,6 +43,9 @@ class Cleverbot{
             if (input.mood.engagement != undefined)  this.setEngagement(input.mood.engagement);
             if (input.mood.regard != undefined ) this.setRegard(input.mood.regard);
         }
+        else {
+            throw new TypeError('Client constructor expects an object or an api key string.')
+        }
         this.endpoint= 'https://www.cleverbot.com/getreply?key=' + this.config.apiKey;
         this.wrapperName = 'Clevertype';
         this.numberOfAPICalls = 0;
@@ -100,7 +103,7 @@ class Cleverbot{
 
         return new Promise<string>(function (resolve, reject) {
             http.get(endpoint, (res : any ) => {
-                const statusCodes : Array<string> = Object.keys(Exceptions);
+                const statusCodes : string[] = Object.keys(Exceptions);
 
                 if (statusCodes.includes(res.statusCode)){
                     const errorMessage : string = Exceptions[res.statusCode];
