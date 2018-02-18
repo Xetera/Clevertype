@@ -29,7 +29,7 @@ const cleverbot = new Cleverbot.Client('api-key');
 cleverbot.say('nevermind I'll find').then((response : Cleverbot.Response) => {
     // Cleverbot.Response is just an alias for string
     console.log(response); // => 'someone like youuu'
-}
+});
 ```
 
 With javascript
