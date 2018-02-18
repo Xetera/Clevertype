@@ -15,19 +15,18 @@ npm install --save clevertype
 
 With typescript
 ```typescript
-import * as Cleverbot from "clevertype"
+import {Cleverbot} from "clevertype"
 
-const cleverbot = new Cleverbot.Client('api-key');
+const cleverbot = new Cleverbot('api-key');
 
-cleverbot.say('nevermind I'll find').then((response : Cleverbot.Response) => {
-    // Cleverbot.Response is just an alias for string
-    console.log(response); // => 'someone like youuu'
+cleverbot.say('come crawling faster').then((response : string) => {
+    console.log(response); // => 'obey your master!'
 });
 ```
 
 With javascript
 ```javascript
-const Cleverbot = require('clevertype');
+const Cleverbot = require('clevertype').Cleverbot;
 
 let cleverbot = new Cleverbot('api-key');
 
@@ -59,9 +58,9 @@ console.log(cleverbot.mood); // => {emotion: 100, engagement: 100, regard: 0}
 
 You you pass in mood settings direction from the constructor as well
 ```typescript 
-import * as Cleverbot from 'clevertype'
+import {Cleverbot, Config} from 'clevertype'
 
-const config : Cleverbot.Config = {
+const config : Config = {
     apiKey: 'your-api-key-here',
     mood: {
         emotion: 10,
@@ -69,7 +68,7 @@ const config : Cleverbot.Config = {
         regard: 100,
     }
 };
-const cleverbot = new Cleverbot.Client(config);
+const cleverbot = new Cleverbot(config);
 ```
 
 Clevertype also logs the number of calls you make per session
