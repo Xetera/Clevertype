@@ -9,6 +9,10 @@ Note: Only the first 5000 requests are free, you would have to get a subscriptio
 # Example
 ## Get started in just a few lines
 
+```
+npm install --save clevertype
+```
+
 With typescript
 ```typescript
 import * as Cleverbot from "clevertype"
