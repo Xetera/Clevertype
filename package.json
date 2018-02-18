@@ -1,7 +1,7 @@
 {
   "name": "clevertype",
   "version": "1.0.0",
-  "description": "Typescript API wrapper for Cleverbot",
+  "description": "0 dependency Typescript API wrapper for Cleverbot",
   "main": "Cleverbot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

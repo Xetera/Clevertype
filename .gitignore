@@ -1,3 +1,6 @@
 *.js
+
 config.json
+
 Example.ts
+.idea/
