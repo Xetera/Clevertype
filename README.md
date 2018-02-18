@@ -7,24 +7,13 @@ Get your Cleverbot API key [here](https://www.cleverbot.com/api/product/api-5k-f
 Note: Only the first 5000 requests are free, you would have to get a subscription for more.
 
 # Example
+## Get started in just a few lines
 
 With typescript
 ```typescript
 import * as Cleverbot from "clevertype"
 
-const config : Cleverbot.Config = {
-    apiKey: 'your-api-key-here',
-    mood: {
-        emotion: 10,
-        engagement: 40,
-        regard: 100,
-    }
-};
-
-const cleverbot = new Cleverbot.Client(config);
-// or 
 const cleverbot = new Cleverbot.Client('api-key');
-
 
 cleverbot.say('nevermind I'll find').then((response : Cleverbot.Response) => {
     // Cleverbot.Response is just an alias for string
@@ -36,18 +25,7 @@ With javascript
 ```javascript
 const Cleverbot = require('clevertype');
 
-const config = {
-    apiKey: "your-api-key",
-    emotion: { 
-    // defaults to 50 for all
-        emotion: 100, 
-        engagement: 100,
-        regard: 100,
-   }
-};
-
-let cleverbot = new Cleverbot(config);
-// constructor also takes in just an api key
+let cleverbot = new Cleverbot('api-key');
 
 cleverbot.say('you should have known').then(response => {
     console.log(response); // => 'the price of evil'
@@ -75,6 +53,21 @@ console.log(cleverbot.mood); // => {emotion: 100, engagement: 100, regard: 0}
 
 ```
 
+You you pass in mood settings direction from the constructor as well
+```typescript 
+import * as Cleverbot from 'clevertype'
+
+const config : Cleverbot.Config = {
+    apiKey: 'your-api-key-here',
+    mood: {
+        emotion: 10,
+        engagement: 40,
+        regard: 100,
+    }
+};
+const cleverbot = new Cleverbot.Client(config);
+```
+
 Clevertype also logs the number of calls you make per session
 ```typescript
 let calls : number = cleverbot.callAmount;
@@ -82,5 +75,6 @@ let calls : number = cleverbot.callAmount;
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
+
 ## Note:
 As useful as it would be, currently cleverbot does not return responses on remaining API calls, to track that you would have to implement some sort of persistent database yourself.
