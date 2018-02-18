@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a142de88-7ec2-4621-ab10-3e638d3a7dec" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Ali.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Ali.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Cleverbot.ts" afterPath="$PROJECT_DIR$/Cleverbot.ts" />
-      <change beforePath="$PROJECT_DIR$/index.d.ts" afterPath="$PROJECT_DIR$/index.d.ts" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" afterPath="$PROJECT_DIR$/tsconfig.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,18 +28,18 @@
           <file leaf-file-name="tsconfig.json" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tsconfig.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="649">
+                <state relative-caret-position="1219">
                   <caret line="53" column="3" lean-forward="false" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Cleverbot.ts" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Cleverbot.ts" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Cleverbot.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="46">
-                  <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+                <state relative-caret-position="2380">
+                  <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#29#0" expanded="true" />
                   </folding>
@@ -53,11 +47,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Example.ts" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Example.ts" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Example.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="17" lean-forward="false" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+                <state relative-caret-position="92">
+                  <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="JSExample.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/JSExample.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="46">
+                  <caret line="2" column="52" lean-forward="true" selection-start-line="2" selection-start-column="52" selection-end-line="2" selection-end-column="52" />
                   <folding />
                 </state>
               </provider>
@@ -67,7 +71,7 @@
             <entry file="file://$PROJECT_DIR$/config.json">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="23">
-                  <caret line="1" column="10" lean-forward="false" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="37" />
+                  <caret line="1" column="38" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="38" />
                   <folding />
                 </state>
               </provider>
@@ -80,8 +84,8 @@
           <file leaf-file-name="index.d.ts" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/index.d.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="207">
-                  <caret line="9" column="5" lean-forward="true" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+                <state relative-caret-position="-702">
+                  <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
                   <folding />
                 </state>
               </provider>
@@ -121,14 +125,14 @@
         <option value="$PROJECT_DIR$/config.json" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/typings.d.ts" />
-        <option value="$PROJECT_DIR$/JSExample.js" />
         <option value="$PROJECT_DIR$/Cleverbot.d.ts" />
         <option value="$PROJECT_DIR$/Example.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/tsconfig.json" />
-        <option value="$PROJECT_DIR$/Cleverbot.ts" />
         <option value="$PROJECT_DIR$/test/hehe.ts" />
         <option value="$PROJECT_DIR$/index.d.ts" />
+        <option value="$PROJECT_DIR$/Cleverbot.ts" />
+        <option value="$PROJECT_DIR$/JSExample.js" />
         <option value="$PROJECT_DIR$/Example.ts" />
       </list>
     </option>
@@ -222,12 +226,12 @@
       <updated>1518778754261</updated>
       <workItem from="1518778755430" duration="33403000" />
       <workItem from="1518935649978" duration="6132000" />
-      <workItem from="1518952422443" duration="2821000" />
+      <workItem from="1518952422443" duration="4911000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42356000" />
+    <option name="totallyTimeSpent" value="44446000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -431,14 +435,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Example.d.ts" />
     <entry file="file://$PROJECT_DIR$/Cleverbot.d.ts" />
-    <entry file="file://$PROJECT_DIR$/JSExample.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="3" lean-forward="false" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -469,18 +465,10 @@
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
             <folding>
-              <marker date="1518935147379" expanded="true" signature="791:847" ph="{...}" />
+              <marker date="1518956144300" expanded="true" signature="830:886" ph="{...}" />
             </folding>
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="649">
-          <caret line="53" column="3" lean-forward="false" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -553,8 +541,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="5" lean-forward="true" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        <state relative-caret-position="-702">
+          <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1219">
+          <caret line="53" column="3" lean-forward="false" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -562,26 +558,34 @@
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
-          <caret line="1" column="10" lean-forward="false" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="37" />
+          <caret line="1" column="38" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Example.ts">
+    <entry file="file://$PROJECT_DIR$/JSExample.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="17" lean-forward="false" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+        <state relative-caret-position="46">
+          <caret line="2" column="52" lean-forward="true" selection-start-line="2" selection-start-column="52" selection-end-line="2" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Cleverbot.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="2380">
+          <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Example.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

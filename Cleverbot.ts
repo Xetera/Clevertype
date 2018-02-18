@@ -158,3 +158,4 @@ export class Cleverbot {
 }
 
 export default Cleverbot
+module.exports = Cleverbot;
