@@ -2,6 +2,10 @@
 
 0 dependency Typescript wrapper for the cleverbot API
 
+Get your Cleverbot API key [here](https://www.cleverbot.com/api/product/api-5k-free-trial/)
+
+Note: Only the first 5000 requests are free, you would have to get a subscription for more.
+
 # Example
 
 With typescript
