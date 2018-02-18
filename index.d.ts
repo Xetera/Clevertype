@@ -66,5 +66,4 @@ declare module "clevertype" {
         public say(message : string): Promise<Response>;
 
     }
-    export default Cleverbot
 }

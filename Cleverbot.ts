@@ -156,6 +156,3 @@ export class Cleverbot {
         return this.config.mood;
     }
 }
-
-export default Cleverbot
-module.exports = Cleverbot;
