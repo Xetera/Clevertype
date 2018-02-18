@@ -1,4 +1,4 @@
-declare module "Cleverbot" {
+declare module "clevertype" {
 
     export type CleverbotState = string;
     export type Response = string;
@@ -39,7 +39,7 @@ declare module "Cleverbot" {
     }
 
 
-    export class Client {
+    export class Cleverbot {
         private endpoint : string;
         private config : Config;
         private CleverbotState : CleverbotState;
@@ -66,4 +66,5 @@ declare module "Cleverbot" {
         public say(message : string): Promise<Response>;
 
     }
+    export default Cleverbot
 }

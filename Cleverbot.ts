@@ -1,5 +1,5 @@
 import * as http from 'https'
-import * as cb from "Cleverbot";
+import * as cb from "clevertype";
 
 const Exceptions : { [index:string] : string } = {
     "401": "Invalid API Key",
@@ -11,7 +11,7 @@ const Exceptions : { [index:string] : string } = {
     "504": "Could not get a reply from Cleverbot API Servers",
 };
 
-class Cleverbot{
+export class Cleverbot {
     private endpoint : string;
     private config : cb.Config = {
         apiKey:"",
@@ -99,7 +99,6 @@ class Cleverbot{
         endpoint += this.encodedRegard;
 
         let response : cb.APIResponse;
-        console.log(endpoint);
 
         return new Promise<string>(function (resolve, reject) {
             http.get(endpoint, (res : any ) => {
@@ -138,7 +137,6 @@ class Cleverbot{
     public setEmotion(amount : number) : void {
         if (amount < 0 || amount > 100) throw new RangeError(`Emotion must be a value between 0 and 100.`);
         this.config.mood.emotion = amount;
-        console.log(this.config.mood.emotion);
     }
 
     public setEngagement(amount : number) : void {
