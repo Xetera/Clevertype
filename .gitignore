@@ -1,6 +1,6 @@
 *.js
 
 config.json
-
+node_modules/
 Example.ts
 .idea/

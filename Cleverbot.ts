@@ -101,36 +101,45 @@ export class Cleverbot {
         let response : cb.APIResponse;
 
         return new Promise<string>(function (resolve, reject) {
-            http.get(endpoint, (res : any ) => {
-                const statusCodes : string[] = Object.keys(Exceptions);
+            try{
+                http.get(endpoint, (res : any ) => {
+                    const statusCodes : string[] = Object.keys(Exceptions);
 
-                if (statusCodes.includes(res.statusCode)){
-                    const errorMessage : string = Exceptions[res.statusCode];
-                    throw new Error(errorMessage);
-                }
+                    if (statusCodes.includes(res.statusCode)){
+                        const errorMessage : string = Exceptions[res.statusCode];
+                        throw new Error(errorMessage);
+                    }
 
-                let final : any = "";
+                    let final : any = "";
 
-                res.on('data', (data:string) => {
-                    final += data;
-                });
+                    res.on('data', (data:string) => {
+                        final += data;
+                    });
 
-                res.on('end', () => {
-                    // get history here later
-                    response = JSON.parse(final);
+                    res.on('end', () => {
+                        // get history here later
+                        response = JSON.parse(final);
+                        that.numberOfAPICalls++;
+
+                        that.setCleverbotState(response.cs);
+
+                        resolve(response.output);
+                    });
+
+                    res.on('error', (error : Error) => {
+                        console.log(error);
+
+                        reject(error);
+                    });
+                })
+            }
+            catch (err) {
+                if (err instanceof SyntaxError){
+                    console.log('There was an error fetching cleverbot\'s request, trying again...');
                     that.numberOfAPICalls++;
-
-                    that.setCleverbotState(response.cs);
-
-                    resolve(response.output);
-                });
-
-                res.on('error', (error : Error) => {
-                    console.log(error);
-
-                    reject(error);
-                });
-            })
+                    that.say(message).then(message => resolve(message));
+                }
+            }
         });
     }
 

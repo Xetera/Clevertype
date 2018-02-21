@@ -75,9 +75,11 @@ Clevertype also logs the number of calls you make per session
 ```typescript
 let calls : number = cleverbot.callAmount;
 ```
+## Patches
+1.0.4 - Included a catch block for syntax errors where responses from cleverbot with an emoji would cause the wrapper to crash
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
 
-## Note:
+## Note
 As useful as it would be, currently cleverbot does not return responses on remaining API calls, to track that you would have to implement some sort of persistent database yourself.
