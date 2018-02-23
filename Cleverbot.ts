@@ -26,7 +26,7 @@ export class Cleverbot {
     private wrapperName : string;
 
     private history : string[]; // implementing this later
-
+    private statusCodes : string[];
     constructor(input : string | cb.Config){
         if (typeof input === 'string'){
             if (input.length !== 27)
@@ -42,6 +42,7 @@ export class Cleverbot {
             if (input.mood.emotion != undefined) this.setEmotion(input.mood.emotion);
             if (input.mood.engagement != undefined)  this.setEngagement(input.mood.engagement);
             if (input.mood.regard != undefined ) this.setRegard(input.mood.regard);
+            this.statusCodes = Object.keys(Exceptions);
         }
         else {
             throw new TypeError('Client constructor expects an object or an api key string.')
@@ -102,9 +103,7 @@ export class Cleverbot {
 
         return new Promise<string>(function (resolve, reject) {
             http.get(endpoint, (res : any ) => {
-                const statusCodes : string[] = Object.keys(Exceptions);
-
-                if (statusCodes.includes(res.statusCode)){
+                if (that.statusCodes.includes(res.statusCode.toString())){
                     const errorMessage : string = Exceptions[res.statusCode];
                     throw new Error(errorMessage);
                 }
@@ -130,6 +129,8 @@ export class Cleverbot {
                     if (error instanceof SyntaxError){
                         console.log('There was an error fetching cleverbot\'s request, trying again...');
                         that.numberOfAPICalls++;
+                        // this is incredibly spaghetti but I'm just counting on the fact
+                        // that it won't happen twice, which it could in theory but whatever
                         that.say(message).then(message => resolve(message));
                     }
                     else {
