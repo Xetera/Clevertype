@@ -28,12 +28,12 @@ export class Cleverbot {
     private history : string[]; // implementing this later
     private statusCodes : string[];
     constructor(input : string | cb.Config){
-        if (typeof input === 'string'){
-            if (input.length !== 27)
-                throw new SyntaxError(`${input} is not a valid Cleverbot API key`);
-
-            this.config.apiKey = input;
+        if (typeof input !== 'string' && typeof input !== 'object') {
+            throw new SyntaxError(`Did Cleverbot API key`);
         }
+        else if (typeof input === 'string')
+            this.config.apiKey = input;
+
         else if (typeof input === 'object'){
             if (input.apiKey.length !== 27)
                 throw new SyntaxError(`${input} is not a valid Cleverbot API key`);
@@ -42,7 +42,7 @@ export class Cleverbot {
             if (input.mood.emotion != undefined) this.setEmotion(input.mood.emotion);
             if (input.mood.engagement != undefined)  this.setEngagement(input.mood.engagement);
             if (input.mood.regard != undefined ) this.setRegard(input.mood.regard);
-            this.statusCodes = Object.keys(Exceptions);
+
         }
         else {
             throw new TypeError('Client constructor expects an object or an api key string.')
@@ -50,6 +50,7 @@ export class Cleverbot {
         this.endpoint= 'https://www.cleverbot.com/getreply?key=' + this.config.apiKey;
         this.wrapperName = 'Clevertype';
         this.numberOfAPICalls = 0;
+        this.statusCodes = Object.keys(Exceptions);
         // the first cs request actually does return us a reply
     }
 
@@ -116,7 +117,19 @@ export class Cleverbot {
 
                 res.on('end', () => {
                     // get history here later
-                    response = JSON.parse(final);
+                    try{
+                        response = JSON.parse(final);
+                    }
+                    catch (err) {
+                        if (err instanceof SyntaxError){
+                            // sometimes cleverbot sends us a weirdly formatted
+                            console.log('There was an error fetching cleverbot\'s request, trying again...');
+                            that.numberOfAPICalls++;
+                            // this is incredibly spaghetti but I'm just counting on the fact
+                            // that it won't happen twice, which it could in theory but whatever
+                            that.say(message).then(message => resolve(message));
+                        }
+                    }
                     that.numberOfAPICalls++;
 
                     that.setCleverbotState(response.cs);
@@ -126,17 +139,8 @@ export class Cleverbot {
 
                 res.on('error', (error : Error) => {
 
-                    if (error instanceof SyntaxError){
-                        console.log('There was an error fetching cleverbot\'s request, trying again...');
-                        that.numberOfAPICalls++;
-                        // this is incredibly spaghetti but I'm just counting on the fact
-                        // that it won't happen twice, which it could in theory but whatever
-                        that.say(message).then(message => resolve(message));
-                    }
-                    else {
-                        console.log(error);
-                        reject(error);
-                    }
+                    console.log(error);
+                    reject(error);
                 });
             })
 
