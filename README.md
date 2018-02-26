@@ -56,7 +56,7 @@ console.log(cleverbot.mood); // => {emotion: 100, engagement: 100, regard: 0}
 
 ```
 
-You you pass in mood settings direction from the constructor as well
+You can pass in mood settings direction from the constructor as well
 ```typescript 
 import {Cleverbot, Config} from 'clevertype'
 
@@ -76,7 +76,11 @@ Clevertype also logs the number of calls you make per session
 let calls : number = cleverbot.callAmount;
 ```
 ## Patches
-1.0.4 - Included a catch block for syntax errors where responses from cleverbot with an emoji would cause the wrapper to crash
+literally every patch until 1.0.8 - Included a catch block for syntax errors where responses from cleverbot with an emoji would cause the wrapper to crash
+
+Ok there's this unbelievably annoying error that gets thrown when we're parsing *certain* responses
+with emojis that cause the wrapper to crash despite including a catch block for `JSON.parse` so I'm super frustrated at this point 
+because I don't know how to solve the problem.
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
