@@ -29,7 +29,7 @@ export class Cleverbot {
     private statusCodes : string[];
     constructor(input : string | cb.Config){
         if (typeof input !== 'string' && typeof input !== 'object') {
-            throw new SyntaxError(`Did Cleverbot API key`);
+            throw new SyntaxError(`Cleverbot constructor expects either a string or an Config object.`);
         }
         else if (typeof input === 'string')
             this.config.apiKey = input;
