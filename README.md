@@ -56,7 +56,7 @@ console.log(cleverbot.mood); // => {emotion: 100, engagement: 100, regard: 0}
 
 ```
 
-You can pass in mood settings direction from the constructor as well
+You can pass in mood settings directly from the constructor as well
 ```typescript 
 import {Cleverbot, Config} from 'clevertype'
 
@@ -84,6 +84,6 @@ because I don't know how to solve the problem.
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
-
+- [ ] Option to create new cs sessions on demand by userId. Not really essential as a part of the wrapper but it would be very useful for [alexa](https://github.com/ilocereal/Alexa)
 ## Note
 As useful as it would be, currently cleverbot does not return responses on remaining API calls, to track that you would have to implement some sort of persistent database yourself.
