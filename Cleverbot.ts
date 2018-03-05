@@ -106,7 +106,7 @@ export class Cleverbot {
             http.get(endpoint, (res : any ) => {
                 if (that.statusCodes.includes(res.statusCode.toString())){
                     const errorMessage : string = Exceptions[res.statusCode];
-                    throw new Error(errorMessage);
+                    return Promise.reject(errorMessage);
                 }
 
                 let final : any = "";
@@ -127,7 +127,11 @@ export class Cleverbot {
                             that.numberOfAPICalls++;
                             // this is incredibly spaghetti but I'm just counting on the fact
                             // that it won't happen twice, which it could in theory but whatever
-                            that.say(message).then(message => resolve(message));
+                            return Promise.resolve(that.say(message));
+                        }
+                        else {
+                            console.log('Unexpected error while sending a request to cleverbot');
+                            return Promise.reject(err);
                         }
                     }
                     that.numberOfAPICalls++;
@@ -142,7 +146,7 @@ export class Cleverbot {
                     console.log(error);
                     reject(error);
                 });
-            })
+            });
 
         });
     }
@@ -165,7 +169,13 @@ export class Cleverbot {
     public get callAmount() : number{
         return this.numberOfAPICalls;
     }
+
     public get mood() : cb.Mood {
         return this.config.mood;
     }
+
+    public get apiKey() : string {
+        return this.config.apiKey;
+    }
+
 }

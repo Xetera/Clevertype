@@ -13,5 +13,10 @@
     "wrapper"
   ],
   "author": "Xetera",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai-as-promised": "^7.1.0",
+    "chai-as-promised": "^7.1.1"
+  },
+  "dependencies": {}
 }
