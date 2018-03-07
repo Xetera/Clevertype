@@ -118,7 +118,7 @@ export class Cleverbot {
                 res.on('end', () => {
                     // get history here later
                     try{
-                        response = JSON.parse(final);
+                        response = JSON.parse(JSON.stringify(final));
                     }
                     catch (err) {
                         if (err instanceof SyntaxError){
