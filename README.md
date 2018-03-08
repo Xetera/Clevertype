@@ -4,7 +4,7 @@
 
 Get your Cleverbot API key [here](https://www.cleverbot.com/api/product/api-5k-free-trial/)
 
-Note: Only the first 5000 requests are free, you would have to get a subscription for more.
+#### Note: Only the first 5000 requests are free, you will be required to purchase a subscription or extra API calls later.
 
 # Example
 ## Get started in just a few lines
@@ -84,6 +84,9 @@ because I don't know how to solve the problem.
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
-- [ ] Option to create new cs sessions on demand by userId. Not really essential as a part of the wrapper but it would be very useful for [alexa](https://github.com/ilocereal/Alexa)
+- [ ] Option to start clevertype with a multi-user mode, saving a different CleverbotState for every unique id to allow coordinating multiple conversations at once
+
 ## Note
 As useful as it would be, currently cleverbot does not return responses on remaining API calls, to track that you would have to implement some sort of persistent database yourself.
+
+#### Made for [Alexa](https://github.com/ilocereal/Alexa/)
