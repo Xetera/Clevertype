@@ -15,9 +15,9 @@ describe('Invoking constructor', () => {
 });
 
 describe('Sending requests', function () {
-    this.timeout(3000);
+    this.timeout(10000);
     it('Returning a string and incrementing message count.', function(done) {
-        this.timeout(3000);
+        this.timeout(10000);
         cleverbot.say('send me an emoji please').then(response => {
             expect(response).to.be.a('string');
         }).then(() => {

@@ -1,5 +1,6 @@
 import * as http from 'https'
 import * as cb from "clevertype";
+import {APIResponse, User} from "clevertype";
 
 const Exceptions : { [index:string] : string } = {
     "401": "Invalid API Key",
@@ -21,6 +22,8 @@ export class Cleverbot {
             regard: 50
         }
     };
+    private multiUser : boolean;
+    private users : Map<string, User>;
     private CleverbotState : cb.CleverbotState;
     private numberOfAPICalls : number;
     private wrapperName : string;
@@ -35,8 +38,6 @@ export class Cleverbot {
             this.config.apiKey = input;
 
         else if (typeof input === 'object'){
-            if (input.apiKey.length !== 27)
-                throw new SyntaxError(`${input} is not a valid Cleverbot API key`);
             this.config.apiKey = input.apiKey;
 
             if (input.mood.emotion != undefined) this.setEmotion(input.mood.emotion);
@@ -47,6 +48,7 @@ export class Cleverbot {
         else {
             throw new TypeError('Client constructor expects an object or an api key string.')
         }
+
         this.endpoint= 'https://www.cleverbot.com/getreply?key=' + this.config.apiKey;
         this.wrapperName = 'Clevertype';
         this.numberOfAPICalls = 0;
@@ -85,11 +87,53 @@ export class Cleverbot {
         return '&input=' + encodeURI(input);
     }
 
-    private setCleverbotState(input : string) : void {
-        this.CleverbotState = input;
+    private setCleverbotState(state : string, id?: string | number) : void {
+        if (this.multiUser && id){
+            const user : User = this.resolveUser(id);
+            user.cs = state
+        }
+        else{
+            this.CleverbotState = state;
+        }
     }
 
-    public say(message : string) : Promise<string> {
+    private static createUser(id : string, eng?: number, emo ?: number, reg ?: number) : User {
+        return {
+            id :id,
+            mood: {
+                engagement: eng || 50,
+                emotion: emo|| 50,
+                regard: reg || 50
+            },
+            cs: undefined,
+            history : undefined
+        }
+    }
+
+    private resolveUser(user : string | number) : User {
+        let id : string;
+        let resolvedUser : User | undefined ;
+        if (!this.multiUser)
+            throw new Error(`Tried resolving user in non-multi user mode.`);
+
+        if (typeof user === 'number'){
+            id = user.toString();
+        }
+        else if (typeof user === 'string') {
+            id = user;
+        }
+        else {
+            throw new TypeError(`Use must be a string or a number.`);
+        }
+        resolvedUser = this.users.get(id);
+        if (resolvedUser === undefined){
+            resolvedUser = Cleverbot.createUser(id);
+            this.users.set(id, resolvedUser);
+        }
+        return resolvedUser;
+    }
+
+    public say(message : string, user?: string | number) : Promise<string> {
         let that = this;
         let endpoint : string = this.endpoint;
 
@@ -100,15 +144,15 @@ export class Cleverbot {
         endpoint += this.encodedEngagement;
         endpoint += this.encodedRegard;
 
-        let response : cb.APIResponse;
 
         return new Promise<string>(function (resolve, reject) {
             http.get(endpoint, (res : any ) => {
+                let response : APIResponse;
+
                 if (that.statusCodes.includes(res.statusCode.toString())){
                     const errorMessage : string = Exceptions[res.statusCode];
                     return Promise.reject(errorMessage);
                 }
-
                 let final : any = "";
 
                 res.on('data', (data:string) => {
@@ -117,34 +161,36 @@ export class Cleverbot {
 
                 res.on('end', () => {
                     // get history here later
-                    try{
-                        response = JSON.parse(JSON.stringify(final));
+                    try {
+                        response = JSON.parse(final);
+
                     }
                     catch (err) {
                         if (err instanceof SyntaxError){
-                            // sometimes cleverbot sends us a weirdly formatted
-                            console.log('There was an error fetching cleverbot\'s request, trying again...');
+                            // sometimes cleverbot sends us a weirdly formatted responses, this should
+                            // be fixed by JSON.stringify but I can't be sure
                             that.numberOfAPICalls++;
-                            // this is incredibly spaghetti but I'm just counting on the fact
-                            // that it won't happen twice, which it could in theory but whatever
-                            return Promise.resolve(that.say(message));
+                            return Promise.reject(
+                                'Cleverbot sent a malformed response, try again.\nErr: ' + err.message
+                            );
+                        }
+                        else if (err.code === "ECONNRESET") {
+                            return Promise.reject(`Cleverbot took too long to respond.`);
                         }
                         else {
-                            console.log('Unexpected error while sending a request to cleverbot');
+                            console.log('Unexpected error while parsing a request to cleverbot');
                             return Promise.reject(err);
                         }
                     }
                     that.numberOfAPICalls++;
-
-                    that.setCleverbotState(response.cs);
+                    that.setCleverbotState(response.cs, user);
 
                     resolve(response.output);
                 });
 
                 res.on('error', (error : Error) => {
-
-                    console.log(error);
-                    reject(error);
+                    console.log(`Error while receiving response from cleverbot.`);
+                    return Promise.reject(error);
                 });
             });
 

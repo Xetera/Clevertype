@@ -22,6 +22,13 @@ declare module "clevertype" {
         }
     }
 
+    export interface User {
+        id: string;
+        mood: Mood;
+        history?:ChatHistory;
+        cs?: CleverbotState;
+    }
+
     export interface APIResponse {
         cs : CleverbotState;
         interaction_count: number;
@@ -37,7 +44,6 @@ declare module "clevertype" {
         time_month: number;
         time_year: number;
     }
-
 
     export class Cleverbot {
         private endpoint : string;
