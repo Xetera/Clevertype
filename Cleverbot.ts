@@ -22,6 +22,7 @@ export class Cleverbot {
             regard: 50
         }
     };
+
     private multiUser : boolean;
     private users : Map<string, User>;
     private CleverbotState : cb.CleverbotState;
@@ -144,7 +145,10 @@ export class Cleverbot {
         endpoint += this.encodedEngagement;
         endpoint += this.encodedRegard;
 
-
+        let options = {
+            hostname:endpoint,
+            json:true
+        };
         return new Promise<string>(function (resolve, reject) {
             http.get(endpoint, (res : any ) => {
                 let response : APIResponse;
@@ -163,13 +167,16 @@ export class Cleverbot {
                     // get history here later
                     try {
                         response = JSON.parse(final);
-
                     }
                     catch (err) {
                         if (err instanceof SyntaxError){
                             // sometimes cleverbot sends us a weirdly formatted responses, this should
                             // be fixed by JSON.stringify but I can't be sure
                             that.numberOfAPICalls++;
+                            console.log(`Debug:\n\tRequested endpoint:\n`);
+                            console.log(endpoint);
+                            console.log(`\tResponse:\n`);
+                            console.log(final);
                             return Promise.reject(
                                 'Cleverbot sent a malformed response, try again.\nErr: ' + err.message
                             );
@@ -178,7 +185,7 @@ export class Cleverbot {
                             return Promise.reject(`Cleverbot took too long to respond.`);
                         }
                         else {
-                            console.log('Unexpected error while parsing a request to cleverbot');
+
                             return Promise.reject(err);
                         }
                     }
