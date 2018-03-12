@@ -13,6 +13,7 @@ declare module "clevertype" {
         apiKey : string;
         cs ?: CleverbotState;
         mood : Mood;
+        debug: boolean;
     }
 
     export interface ChatHistory {

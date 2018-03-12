@@ -20,7 +20,8 @@ export class Cleverbot {
             emotion: 50,
             engagement: 50,
             regard: 50
-        }
+        },
+        debug: false
     };
 
     private multiUser : boolean;
@@ -44,7 +45,7 @@ export class Cleverbot {
             if (input.mood.emotion != undefined) this.setEmotion(input.mood.emotion);
             if (input.mood.engagement != undefined)  this.setEngagement(input.mood.engagement);
             if (input.mood.regard != undefined ) this.setRegard(input.mood.regard);
-
+            this.config.debug = input.debug;
         }
         else {
             throw new TypeError('Client constructor expects an object or an api key string.')
@@ -144,7 +145,8 @@ export class Cleverbot {
         let endpoint : string = this.endpoint;
 
         endpoint += this.encodedWrapperName;
-        endpoint += Cleverbot.encodeInput(message);
+        //endpoint += Cleverbot.encodeInput(message);
+        endpoint += message;
         endpoint += this.encodedCleverbotState;
         endpoint += this.encodedEmotion;
         endpoint += this.encodedEngagement;
