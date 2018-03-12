@@ -78,7 +78,7 @@ let calls : number = cleverbot.callAmount;
 ## Patches
 literally every patch until 1.0.8 - Included a catch block for syntax errors where responses from cleverbot with an emoji would cause the wrapper to crash
 
-1.0.11 - fixed the issue for good (I think)
+1.0.13 - fixed the issue for good (I think)
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
