@@ -76,9 +76,12 @@ Clevertype also logs the number of calls you make per session
 let calls : number = cleverbot.callAmount;
 ```
 ## Patches
-literally every patch until 1.0.8 - Included a catch block for syntax errors where responses from cleverbot with an emoji would cause the wrapper to crash
 
-1.0.13 - fixed the issue for good (I think)
+1.0.13 - now removing emojis from messages to prevent cleverbot from echoing malformed JSON responses.
+
+##### Important:
+
+If you're using a version before 1.0.13 make sure to update it as emojis were being URI encoded which ended up breaking cleverbot and caused it to return a JSON responses that included control characters and invalid unicode.
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
