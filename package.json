@@ -1,6 +1,6 @@
 {
   "name": "clevertype",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "0 dependency Typescript API wrapper for Cleverbot",
   "main": "Cleverbot.js",
   "scripts": {
