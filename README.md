@@ -78,9 +78,7 @@ let calls : number = cleverbot.callAmount;
 ## Patches
 literally every patch until 1.0.8 - Included a catch block for syntax errors where responses from cleverbot with an emoji would cause the wrapper to crash
 
-Ok there's this unbelievably annoying error that gets thrown when we're parsing *certain* responses
-with emojis that cause the wrapper to crash despite including a catch block for `JSON.parse` so I'm super frustrated at this point 
-because I don't know how to solve the problem.
+1.0.11 - fixed the issue for good (I think)
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
