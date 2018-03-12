@@ -85,6 +85,7 @@ export class Cleverbot {
     }
 
     private static encodeInput(input : string) : string {
+        input = Cleverbot.escapeEmoji(input);
         return '&input=' + encodeURI(input);
     }
 
@@ -134,6 +135,10 @@ export class Cleverbot {
         return resolvedUser;
     }
 
+    private static escapeEmoji(message : string){
+        return message.replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '');
+    }
+
     public say(message : string, user?: string | number) : Promise<string> {
         let that = this;
         let endpoint : string = this.endpoint;
@@ -144,11 +149,7 @@ export class Cleverbot {
         endpoint += this.encodedEmotion;
         endpoint += this.encodedEngagement;
         endpoint += this.encodedRegard;
-
-        let options = {
-            hostname:endpoint,
-            json:true
-        };
+        console.log(endpoint);
         return new Promise<string>(function (resolve, reject) {
             http.get(endpoint, (res : any ) => {
                 let response : APIResponse;

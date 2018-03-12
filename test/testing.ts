@@ -18,7 +18,7 @@ describe('Sending requests', function () {
     this.timeout(10000);
     it('Returning a string and incrementing message count.', function(done) {
         this.timeout(10000);
-        cleverbot.say('send me an emoji please').then(response => {
+        cleverbot.say('s😫hurdur😫😫testtest').then(response => {
             expect(response).to.be.a('string');
         }).then(() => {
             expect(cleverbot.callAmount).to.equal(1);
