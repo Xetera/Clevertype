@@ -145,8 +145,7 @@ export class Cleverbot {
         let endpoint : string = this.endpoint;
 
         endpoint += this.encodedWrapperName;
-        //endpoint += Cleverbot.encodeInput(message);
-        endpoint += message;
+        endpoint += Cleverbot.encodeInput(message);
         endpoint += this.encodedCleverbotState;
         endpoint += this.encodedEmotion;
         endpoint += this.encodedEngagement;
