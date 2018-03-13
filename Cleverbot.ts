@@ -2,7 +2,6 @@ import * as http from 'https'
 import * as cb from "clevertype";
 import {APIResponse, User} from "clevertype";
 import {IncomingMessage} from "http";
-import * as iconv from  'iconv-lite'
 import axios, {AxiosResponse} from 'axios'
 
 const Exceptions : { [index:string] : string } = {
