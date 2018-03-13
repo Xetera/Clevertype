@@ -1,6 +1,9 @@
 import * as http from 'https'
 import * as cb from "clevertype";
 import {APIResponse, User} from "clevertype";
+import {IncomingMessage} from "http";
+import * as iconv from  'iconv-lite'
+import axios, {AxiosResponse} from 'axios'
 
 const Exceptions : { [index:string] : string } = {
     "401": "Invalid API Key",
@@ -86,8 +89,8 @@ export class Cleverbot {
     }
 
     private static encodeInput(input : string) : string {
-        input = Cleverbot.escapeEmoji(input);
-        return '&input=' + encodeURI(input);
+        const out = iconv.encode(input, 'utf-8');
+        return '&input=' + encodeURIComponent(out.toString());
     }
 
     private setCleverbotState(state : string, id?: string | number) : void {
@@ -149,7 +152,6 @@ export class Cleverbot {
         }
         catch (err) {
             console.log(`An error occurred while safe parsing json` + err);
-            console.log(buffer.join(''));
             return err;
         }
         return out;
@@ -160,7 +162,6 @@ export class Cleverbot {
     }
 
     public say(message : string, user?: string | number) : Promise<string> {
-        let that = this;
         let endpoint : string = this.endpoint;
 
         endpoint += this.encodedWrapperName;
@@ -169,57 +170,20 @@ export class Cleverbot {
         endpoint += this.encodedEmotion;
         endpoint += this.encodedEngagement;
         endpoint += this.encodedRegard;
-        console.log(endpoint);
-        return new Promise<string>(function (resolve, reject) {
-            http.get(endpoint, (res : any ) => {
-                let response : APIResponse;
 
-                if (that.statusCodes.includes(res.statusCode.toString())){
-                    const errorMessage : string = Exceptions[res.statusCode];
-                    return Promise.reject(errorMessage);
-                }
-                let final : any = "";
+        return axios.get(endpoint).then((res:AxiosResponse<APIResponse>)=> {
+            if (res.statusText && this.statusCodes.includes(res.statusText.toString())){
+                const errorMessage : string = Exceptions[res.statusText];
+                return Promise.reject(errorMessage);
+            }
 
-                res.on('data', (data:string) => {
-                    final += data;
-                });
-
-                res.on('end', () => {
-                    // get history here later
-                    try {
-                        response = JSON.parse(final);
-                    }
-                    catch (err) {
-                        if (err instanceof SyntaxError){
-                            // so cleverbot is a piece of shit and it will randomly
-                            // put random invalid unicode in our responses so we want
-                            // to make sure we escape those properly when we're reading
-                            that.numberOfAPICalls++;
-                            console.log(`Debug:\n\tRequested endpoint:\n`);
-                            console.log(endpoint);
-                            console.log(`\tResponse:\n`);
-                            console.log(final);
-                            return Promise.resolve(Cleverbot.safeParseJSON(final));
-                        }
-                        else if (err.code === "ECONNRESET") {
-                            return Promise.reject(`Cleverbot took too long to respond.`);
-                        }
-                        else {
-                            return Promise.reject(err);
-                        }
-                    }
-                    that.numberOfAPICalls++;
-                    that.setCleverbotState(response.cs, user);
-
-                    resolve(response.output);
-                });
-
-                res.on('error', (error : Error) => {
-                    console.log(`Error while receiving response from cleverbot.`);
-                    return Promise.reject(error);
-                });
-            });
-
+            this.numberOfAPICalls++;
+            this.setCleverbotState(res.data.cs, user);
+            return Promise.resolve(res.data.output);
+        }).catch(err => {
+            console.log('Error getting response from cleverbot\n' +  err);
+            console.log('endpoint: ' + endpoint + '\n');
+            return Promise.reject(err);
         });
     }
 
