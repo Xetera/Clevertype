@@ -136,6 +136,25 @@ export class Cleverbot {
         return resolvedUser;
     }
 
+    private static safeParseJSON(input : string) : {[index:string] :  string } {
+        let buffer : string[] = [];
+        let out;
+        for (let char of input){
+            if (/[\u0009\u000a\u000d\u0020-\uD7FF\uE000-\uFFFD]/.test(char)){
+                buffer.push(char);
+            }
+        }
+        try {
+            out = JSON.parse(buffer.join(''));
+        }
+        catch (err) {
+            console.log(`An error occurred while safe parsing json` + err);
+            console.log(buffer.join(''));
+            return err;
+        }
+        return out;
+    }
+
     private static escapeEmoji(message : string){
         return message.replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '');
     }
@@ -172,22 +191,20 @@ export class Cleverbot {
                     }
                     catch (err) {
                         if (err instanceof SyntaxError){
-                            // sometimes cleverbot sends us a weirdly formatted responses, this should
-                            // be fixed by JSON.stringify but I can't be sure
+                            // so cleverbot is a piece of shit and it will randomly
+                            // put random invalid unicode in our responses so we want
+                            // to make sure we escape those properly when we're reading
                             that.numberOfAPICalls++;
                             console.log(`Debug:\n\tRequested endpoint:\n`);
                             console.log(endpoint);
                             console.log(`\tResponse:\n`);
                             console.log(final);
-                            return Promise.reject(
-                                'Cleverbot sent a malformed response, try again.\nErr: ' + err.message
-                            );
+                            return Promise.resolve(Cleverbot.safeParseJSON(final));
                         }
                         else if (err.code === "ECONNRESET") {
                             return Promise.reject(`Cleverbot took too long to respond.`);
                         }
                         else {
-
                             return Promise.reject(err);
                         }
                     }
