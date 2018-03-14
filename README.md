@@ -1,6 +1,6 @@
 # Clevertype
 
-0 dependency Typescript wrapper for the cleverbot API
+An extensive Javascript/Typescript wrapper for the cleverbot API
 
 Get your Cleverbot API key [here](https://www.cleverbot.com/api/product/api-5k-free-trial/)
 
@@ -75,13 +75,9 @@ Clevertype also logs the number of calls you make per session
 ```typescript
 let calls : number = cleverbot.callAmount;
 ```
-## Patches
-
-1.0.13 - now removing emojis from messages to prevent cleverbot from echoing malformed JSON responses.
-
 ##### Important:
 
-If you're using a version before 1.0.13 make sure to update it as emojis were being URI encoded which ended up breaking cleverbot and caused it to return a JSON responses that included control characters and invalid unicode.
+If you're using a version before 1.1.3 make sure to update it as a dependency was updated to prevent random crashes  
 
 ## TODO
 - [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
