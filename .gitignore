@@ -1,5 +1,4 @@
-*.js
-
+dist/
 config.json
 node_modules/
 Example.ts
