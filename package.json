@@ -4,6 +4,7 @@
   "description": "0 dependency Typescript API wrapper for Cleverbot",
   "main": "Cleverbot.js",
   "scripts": {
+    "lint": "tslint *.ts",
     "build": "tsc",
     "test": "mocha test/*.js"
   },
@@ -21,7 +22,8 @@
     "@types/node": "^9.4.7",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^5.0.4"
+    "mocha": "^5.0.4",
+    "tslint": "^5.9.1"
   },
   "dependencies": {
     "axios": "^0.18.0",
