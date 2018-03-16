@@ -7,7 +7,6 @@ cache:
   - node_modules
 
 before_script:
-  - npm run setup
   - npm install codecov -g
   - npm run build
 
