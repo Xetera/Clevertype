@@ -4,6 +4,7 @@
   "description": "0 dependency Typescript API wrapper for Cleverbot",
   "main": "Cleverbot.js",
   "scripts": {
+    "build": "tsc",
     "test": "mocha test/*.js"
   },
   "keywords": [
@@ -24,6 +25,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "iconv-lite": "^0.4.19"
+    "iconv-lite": "^0.4.19",
+    "moment": "^2.21.0",
+    "typescript": "^2.7.2"
   }
 }

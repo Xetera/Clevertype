@@ -1,6 +1,6 @@
 # Clevertype
 
-0 dependency Typescript wrapper for the cleverbot API
+An extensive Javascript/Typescript wrapper for the cleverbot API
 
 Get your Cleverbot API key [here](https://www.cleverbot.com/api/product/api-5k-free-trial/)
 

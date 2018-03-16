@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- stable
+
+cache:
+  directories:
+  - node_modules
+
+before_script:
+  - npm run setup
+  - npm install codecov -g
+  - npm run build
+
+script:
+  - npm test
+
+after_success:
+  - codecov
