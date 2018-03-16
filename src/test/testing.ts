@@ -8,7 +8,7 @@ let testingKey : string | undefined;
 if (process.env.KEY)
     testingKey = process.env.KEY;
 else
-    testingKey = require('../config.json').key;
+    testingKey = require('../../config.json').key;
 
 
 
