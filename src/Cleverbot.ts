@@ -1,6 +1,5 @@
 ///<reference path="index.d.ts"/>
-import * as cb from 'clevertype';
-import {APIResponse, ChatHistory, Mood} from 'clevertype';
+import {APIResponse, ChatHistory, CleverbotState, Config, Mood} from 'clevertype';
 import * as iconv from  'iconv-lite'
 import axios, {AxiosError, AxiosResponse} from 'axios'
 import {Exceptions} from "./Exceptions";
@@ -13,7 +12,7 @@ export class Cleverbot {
 
     // the config file is our preset for the mood of subsequent calls
     // when multi user is off
-    private config : cb.Config = {
+    private config : Config = {
         apiKey:'',
         mood: {
             emotion: 50,
@@ -23,14 +22,14 @@ export class Cleverbot {
     };
 
     private multiUser : boolean;
-    private _users : Map<string, User>;
-    private CleverbotState : cb.CleverbotState;
+    private _users ?: Map<string, User>;
+    private CleverbotState ?: CleverbotState;
     private numberOfAPICalls : number;
     private wrapperName : string;
-    private history : ChatHistory[];
+    private history ?: ChatHistory[];
     private statusCodes : string[];
 
-    constructor(input : string | cb.Config, multiUser ?: boolean) {
+    constructor(input : string | Config, multiUser ?: boolean) {
 
         if (typeof input === 'string')
             this.config.apiKey = input;
@@ -52,6 +51,7 @@ export class Cleverbot {
             this._users = new Map<string, User>();
         }
         else { // we don't want this initialized if we don't need to
+            this.multiUser = false;
             this.history = [];
         }
 
@@ -116,6 +116,8 @@ export class Cleverbot {
         }
     }
     private createSingleUserHistory(userInput: string, cleverbotResponse : string,requestDate: Date) : ChatHistory {
+        if (this.multiUser || !this.history)
+            throw new Error('Tried to create single user history in multiUser mode  ');
         const latestConversation = Math.max(...this.history.map((hs : ChatHistory) => hs.number));
         let history = <ChatHistory> {};
 
@@ -170,7 +172,7 @@ export class Cleverbot {
     private resolveUser(user : string | number, safe?: boolean) : User {
         let id : string;
         let resolvedUser : User | undefined ;
-        if (!this.multiUser)
+        if (!this.multiUser || this._users === undefined)
             throw new Error(`Tried resolving user in non-multi user mode.`);
 
         if (typeof user === 'number'){
@@ -234,7 +236,7 @@ export class Cleverbot {
                 _user.history.push(this.createMultiUserHistory(message, response, _user.id, requestDate));
                 _user.messages++;
             }
-            else {
+            else if (this.history && !this.multiUser){
                 this.setCleverbotState(res.data.cs);
                 this.history.push(this.createSingleUserHistory(message, response, requestDate))
             }
@@ -294,7 +296,7 @@ export class Cleverbot {
         return this.numberOfAPICalls;
     }
 
-    public mood(user ?: string | number) : cb.Mood {
+    public mood(user ?: string | number) : Mood {
         if (!user && !this.multiUser)
             return this.config.mood;
         else if (user && !this.multiUser)
@@ -310,7 +312,7 @@ export class Cleverbot {
     }
 
     public get users() : User[] {
-        if (!this.multiUser)
+        if (!this.multiUser || !this._users)
             throw new Error(`Tried to fetch users but clevertype is not in multi user mode.`);
         return Array.from(this._users.values());
     }
