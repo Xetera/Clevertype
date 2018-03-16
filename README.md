@@ -1,3 +1,4 @@
+![](https://travis-ci.org/ilocereal/Clevertype.svg?branch=master)
 # Clevertype
 
 An extensive Javascript/Typescript wrapper for the cleverbot API
