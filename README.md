@@ -35,6 +35,9 @@ cleverbot.say('you should have known').then(response => {
 });
 ```
 
+## Important:
+
+If you're using a version before 1.1.3 make sure to update it as a dependency was updated to prevent random crashes.  
 
 
 ## Change cleverbot's mood:
@@ -75,19 +78,12 @@ Clevertype also logs the number of calls you make per session
 ```typescript
 let calls : number = cleverbot.callAmount;
 ```
-## Patches
-
-1.0.13 - now removing emojis from messages to prevent cleverbot from echoing malformed JSON responses.
-
-##### Important:
-
-If you're using a version before 1.0.13 make sure to update it as emojis were being URI encoded which ended up breaking cleverbot and caused it to return a JSON responses that included control characters and invalid unicode.
 
 ## TODO
-- [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState
-- [ ] Option to start clevertype with a multi-user mode, saving a different CleverbotState for every unique id to allow coordinating multiple conversations at once
+- [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState.
+- [ ] Option to start clevertype with a multi-user mode, saving a different CleverbotState for every unique id to allow coordinating multiple conversations at once without confusing contexts for different users.
 
-## Note
-As useful as it would be, currently cleverbot does not return responses on remaining API calls, to track that you would have to implement some sort of persistent database yourself.
+### Note
+As useful as it would be, currently cleverbot does not return and information on the remaining API calls for your account, to track that you would have to implement some sort of persistent database yourself.
 
 #### Made for [Alexa](https://github.com/ilocereal/Alexa/)
