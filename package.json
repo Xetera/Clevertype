@@ -2,11 +2,11 @@
   "name": "clevertype",
   "version": "1.1.2",
   "description": "0 dependency Typescript API wrapper for Cleverbot",
-  "main": "Cleverbot.js",
+  "main": "dist/Cleverbot.js",
   "scripts": {
     "lint": "tslint *.ts",
     "build": "tsc",
-    "test": "mocha test/*.js"
+    "test": "mocha dist/test/*.js"
   },
   "keywords": [
     "Cleverbot",
