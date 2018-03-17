@@ -1,5 +1,5 @@
 dist/
 config.json
 node_modules/
-Example.ts
+src/Example.ts
 .idea/

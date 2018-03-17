@@ -40,7 +40,6 @@ cleverbot.say('you should have known').then(response => {
 
 If you're using a version before 1.1.3 make sure to update it as a dependency was updated to prevent random crashes.  
 
-
 ## Change cleverbot's mood:
 
 * Emotion: Controls how random cleverbot's responses are going to be, 0 = relevant, 100 = wtf
@@ -80,9 +79,19 @@ Clevertype also logs the number of calls you make per session
 let calls : number = cleverbot.callAmount;
 ```
 
+# Full Documentation
+[Read the Wiki](https://github.com/ilocereal/Clevertype/wiki)
+## Changes
+2.0.0 - Now supporting multi user mode which lets you coordinate conversations among multiple users with just an id.
+
+### Breaking changes
+
+#### 2.0.0
+`cleverbot.mood` is now a function `cleverbot.mood()`
+
 ## TODO
-- [ ] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState.
-- [ ] Option to start clevertype with a multi-user mode, saving a different CleverbotState for every unique id to allow coordinating multiple conversations at once without confusing contexts for different users.
+- [x] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState.
+- [x] Option to start clevertype with a multi-user mode, saving a different CleverbotState for every unique id to allow coordinating multiple conversations at once without confusing contexts for different users.
 
 ### Note
 As useful as it would be, currently cleverbot does not return and information on the remaining API calls for your account, to track that you would have to implement some sort of persistent database yourself.
