@@ -1,4 +1,4 @@
-///<reference path="index.d.ts"/>
+///<reference path="./index.d.ts"/>
 import {APIResponse, ChatHistory, CleverbotState, Config, Mood} from 'clevertype';
 import * as iconv from  'iconv-lite'
 import axios, {AxiosError, AxiosResponse} from 'axios'
@@ -37,9 +37,10 @@ export class Cleverbot {
         else if (typeof input === 'object') {
             this.config.apiKey = input.apiKey;
             if (input.mood) {
-                input.mood.emotion != undefined ? this.setEmotion(input.mood.emotion) : '';
-                input.mood.engagement != undefined ? this.setEngagement(input.mood.engagement) : '';
-                input.mood.regard != undefined ? this.setRegard(input.mood.regard) : '';
+                // our default config mood is already 50 for each so we just pass
+                input.mood.emotion ? this.setEmotion(input.mood.emotion) : '';
+                input.mood.engagement ? this.setEngagement(input.mood.engagement) : '';
+                input.mood.regard ? this.setRegard(input.mood.regard) : '';
             }
         }
         else {
@@ -295,8 +296,17 @@ export class Cleverbot {
     public get callAmount() : number{
         return this.numberOfAPICalls;
     }
+    
+    // for backwards compatibility
+    /**
+     * @deprecated deprecated method since 2.0.0, use getMood() instead
+     */
+    public get mood(){
+        console.warn(`mood is deprecated, use getMood() instead.`);
+        return this.config.mood;
+    }
 
-    public mood(user ?: string | number) : Mood {
+    public getMood(user ?: string | number) : Mood {
         if (!user && !this.multiUser)
             return this.config.mood;
         else if (user && !this.multiUser)
