@@ -28,8 +28,6 @@ declare module "clevertype" {
         getConversation(): Interaction
     }
 
-
-
     export interface APIResponse {
         cs : CleverbotState;
         interaction_count: string;
@@ -67,4 +65,43 @@ declare module "clevertype" {
         time_year: string;
     }
 
+    export class User {
+        public id: string;
+        public mood: Mood ;
+        public messages: number;
+        public history :ChatHistory[];
+        public cs?: CleverbotState;
+        public getFirst() : Interaction;
+        public getLast() : Interaction;
+    }
+
+    export class Cleverbot {
+        private endpoint : string;
+        private config : Config;
+        private CleverbotState : CleverbotState;
+        private readonly numberOfAPICalls : number;
+        private readonly wrapperName : string;
+        private readonly encodedWrapperName: string;
+        public constructor(apiKey: string | Config, multiUser?: boolean);
+        private encodedEmotion(emotion?: number );
+        private encodedEngagement(engagement?: number);
+        private encodedRegard(regard?: number);
+        private encodedCleverbotState(state?: string);
+        private static encodeInput(input: string);
+        private setCleverbotState(state:string, id?:string|number);
+        private createHistory(userInput: string, cleverbotResponse: string, id: string | number, requestDate: Date);
+        private static createUser(id: string, eng?: number, emo?: number, reg?: number);
+        private resolveUser(user: number | string, safe?: boolean);
+        public readonly apiKey: string;
+        public readonly users: User[];
+        public readonly callAmount : number;
+        public say(message: string, user?: string | number): Promise<string>;
+        public setEmotion(amount: number, user?: number | string): void;
+        public setEngagement(amount: number, user?: number | string): void;
+        public setRegard(amount: number, user?: number | string): void;
+        public mood(user?: string | number): Mood;
+        public getUser(user: string | number): User;
+        public getHistory(user: string | number): ChatHistory[];
+
+    }
 }
