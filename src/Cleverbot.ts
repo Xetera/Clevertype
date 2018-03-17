@@ -1,4 +1,4 @@
-///<reference path="./index.d.ts"/>
+///<reference path="../index.d.ts"/>
 import {APIResponse, ChatHistory, CleverbotState, Config, Mood} from 'clevertype';
 import * as iconv from  'iconv-lite'
 import axios, {AxiosError, AxiosResponse} from 'axios'

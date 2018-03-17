@@ -1,4 +1,4 @@
-///<reference path="./index.d.ts"/>
+///<reference path="../index.d.ts"/>
 import {ChatHistory, CleverbotState, Interaction, Mood} from "clevertype";
 import {isString} from "util";
 

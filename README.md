@@ -87,7 +87,7 @@ let calls : number = cleverbot.callAmount;
 ### Breaking changes
 
 #### 2.0.0
-`cleverbot.mood` is now a function `cleverbot.mood()`
+`cleverbot.mood` is now `cleverbot.getMood()`
 
 ## TODO
 - [x] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState.
