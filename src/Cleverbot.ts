@@ -1,11 +1,12 @@
 ///<reference path="../index.d.ts"/>
 import {APIResponse, ChatHistory, CleverbotState, Config, Mood} from 'clevertype';
 import * as iconv from  'iconv-lite'
-import axios, {AxiosError, AxiosResponse} from 'axios'
+import axios, {AxiosError, AxiosInstance, AxiosResponse} from 'axios'
 import {Exceptions} from "./Exceptions";
 import moment = require("moment");
 import {isString} from "util";
 import {User} from "./User";
+import * as https from "https";
 
 export class Cleverbot {
     private endpoint : string;
@@ -28,7 +29,7 @@ export class Cleverbot {
     private wrapperName : string;
     private history ?: ChatHistory[];
     private statusCodes : string[];
-
+    private instance: AxiosInstance;
     constructor(input : string | Config, multiUser ?: boolean) {
 
         if (typeof input === 'string')
@@ -61,6 +62,12 @@ export class Cleverbot {
         this.numberOfAPICalls = 0;
         this.statusCodes = Object.keys(Exceptions);
         // the first cs request actually does return us a reply
+
+        this.instance = axios.create({
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false
+            })
+        })
     }
 
     private get encodedWrapperName() : string {
@@ -225,7 +232,7 @@ export class Cleverbot {
             endpoint += this.encodedRegard();
         }
 
-        return axios.get(endpoint).then((res:AxiosResponse<APIResponse>) => {
+        return this.instance.get(endpoint).then((res:AxiosResponse<APIResponse>) => {
             if (res.statusText && this.statusCodes.includes(res.statusText.toString())){
                 const errorMessage : string = Exceptions[res.statusText];
                 return Promise.reject(errorMessage);
