@@ -18,7 +18,7 @@ With typescript
 ```typescript
 import {Cleverbot} from "clevertype"
 
-const cleverbot = new Cleverbot('api-key');
+const cleverbot: Cleverbot = new Cleverbot('api-key');
 
 cleverbot.say('come crawling faster').then((response : string) => {
     console.log(response); // => 'obey your master!'
@@ -35,6 +35,17 @@ cleverbot.say('you should have known').then(response => {
     console.log(response); // => 'the price of evil'
 });
 ```
+
+Coordinate multiple conversations between users without losing context
+```typescript
+cleverbot.say('hey there', 'john'); 
+// new user = new conversation
+cleverbot.say('hi friend', 'alexa');  
+// new user = new conversation
+cleverbot.say('how are you', 'john');
+// john speaking again
+``` 
+
 
 ## Important:
 
