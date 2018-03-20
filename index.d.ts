@@ -17,6 +17,7 @@ declare module "clevertype" {
     export type CleverbotResponse = string;
 
     export type Interaction  = [UserInput, CleverbotResponse];
+
     export interface ChatHistory {
         input: UserInput;
         response: CleverbotResponse;

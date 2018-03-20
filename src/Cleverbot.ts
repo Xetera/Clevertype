@@ -67,7 +67,7 @@ export class Cleverbot {
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false
             })
-        })
+        });
     }
 
     private get encodedWrapperName() : string {

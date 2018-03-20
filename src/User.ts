@@ -16,11 +16,13 @@ export class User {
         this.messages = 0;
     }
 
-    public getFirst(): Interaction {
+    public getFirst(): Interaction | undefined {
+        if (!this.history.length) return undefined;
         return this.history[0].getConversation();
     }
 
-    public getLast(): Interaction {
+    public getLast(): Interaction | undefined {
+        if (!this.history.length) return undefined;
         return this.history[this.history.length-1].getConversation();
     }
 }
