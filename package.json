@@ -2,6 +2,10 @@
   "name": "clevertype",
   "version": "2.0.3",
   "description": "An extensive Javascript/Typescript API wrapper for Cleverbot",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/ilocereal/Clevertype"
+  },
   "main": "dist/Cleverbot.js",
   "scripts": {
     "lint": "tslint *.ts",
