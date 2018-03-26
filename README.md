@@ -85,7 +85,7 @@ const config : Config = {
 const cleverbot = new Cleverbot(config);
 ```
 
-Clevertype also logs the number of calls you make per session
+Clevertype also logs the number of calls you make per session.
 ```typescript
 let calls : number = cleverbot.callAmount;
 ```
