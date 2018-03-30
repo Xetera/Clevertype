@@ -92,6 +92,7 @@ let calls : number = cleverbot.callAmount;
 
 # Full Documentation
 [Read the Wiki](https://github.com/ilocereal/Clevertype/wiki)
+
 ## Changes
 2.0.0 - Now supporting multi user mode which lets you coordinate conversations among multiple users with just an id.
 
