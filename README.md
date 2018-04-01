@@ -46,7 +46,6 @@ cleverbot.say('how are you', 'john');
 // john speaking again
 ``` 
 
-
 ## Important:
 
 If you're using a version before 1.1.3 make sure to update it as a dependency was updated to prevent random crashes.  
