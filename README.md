@@ -3,9 +3,7 @@
 
 An extensive Javascript/Typescript wrapper for the cleverbot API
 
-Get your Cleverbot API key [here](https://www.cleverbot.com/api/product/api-5k-free-trial/)
-
-#### Note: Only the first 5000 requests are free, you will be required to purchase a subscription or extra API calls later.
+#### Note: Unfortunately as of April 2018, a free trial key is no longer being offered. You can follow [this link](https://www.cleverbot.com/api/#abovetitle) to purchase a paid package instead.
 
 # Example
 ## Get started in just a few lines
