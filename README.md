@@ -101,7 +101,7 @@ let calls : number = cleverbot.callAmount;
 ## TODO
 - [x] Save conversation history, this should also take into account the mood that the call was made with as well as the time and CleverbotState.
 - [x] Option to start clevertype with a multi-user mode, saving a different CleverbotState for every unique id to allow coordinating multiple conversations at once without confusing contexts for different users.
-
+- [ ] Allow setting rate limiting options for conversations
 ### Note
 As useful as it would be, currently cleverbot does not return and information on the remaining API calls for your account, to track that you would have to implement some sort of persistent database yourself.
 
