@@ -105,4 +105,4 @@ let calls : number = cleverbot.callAmount;
 ### Note
 As useful as it would be, currently cleverbot does not return and information on the remaining API calls for your account, to track that you would have to implement some sort of persistent database yourself.
 
-#### Made for [Alexa](https://github.com/ilocereal/Alexa/)
+#### Made for [Hifumi](https://github.com/ilocereal/Hifumi/)
